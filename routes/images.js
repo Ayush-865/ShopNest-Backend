@@ -21,6 +21,7 @@ router.post("/updateImgProfile", fetchuser, async (req, res) => {
     let userid = req.user.id;
     const image = req.body.image; 
     const img = await Product.findOne({ name: { $regex: req.params.key } });
+    console.log(img)
     if (img) {
       await Images.deleteOne({ user: userid });
     }
