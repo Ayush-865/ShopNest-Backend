@@ -19,20 +19,16 @@ router.post("/imgProfile", fetchuser, async (req, res) => {
 router.post("/updateImgProfile", fetchuser, async (req, res) => {
   try {
     let userid = req.user.id;
-    const image = req.body.image.toString(); 
-    let img = await Product.find({
-      "$or": [
-          { "name": { $regex: req.params.key } },
-      ]
-  });
-  if(img){
-    await Images.deleteOne({ user:userid})
-  }
+    const image = req.body.image; 
+    const img = await Product.findOne({ name: { $regex: req.params.key } });
+    if (img) {
+      await Images.deleteOne({ user: userid });
+    }
     await Images.create({ user: userid, image: image });
-    res.send({ Status: "ok" });
+    res.json({ Status: "ok" });
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ Status: "error", message: "An error occurred on the server.", error: error });
+    res.status(500).json({ Status: "error", message: "An error occurred on the server.", error: error.message });
   }
 });
 
