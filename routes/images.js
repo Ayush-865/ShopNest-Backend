@@ -32,7 +32,7 @@ router.post("/updateImgProfile", fetchuser, async (req, res) => {
     res.send({ Status: "ok" });
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ Status: "error", message: "An error occurred on the server." });
+    res.status(500).json({ Status: "error", message: "An error occurred on the server.", error: error });
   }
 });
 
